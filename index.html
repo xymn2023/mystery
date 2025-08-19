@@ -3,52 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dashboard jumppage</title>
-    <link rel="icon" type="image/jpeg" href="https://lsky.panell.top/i/2025/01/24/679347c837206.jpg">
+    <title>Dashboard Jumppage</title>
+    <link rel="icon" type="image/jpeg" href="https://cloudflare.panell.top/file/1755610956199_maho.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             /* 亮色模式变量 */
-            --bg-color: #f0f2f5;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text-color: #2c3e50;
+            --bg-primary: #667eea;
+            --bg-secondary: #764ba2;
+            --card-bg: rgba(255, 255, 255, 0.15);
+            --card-border: rgba(255, 255, 255, 0.2);
+            --text-color: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
             --shadow-color: rgba(0, 0, 0, 0.1);
-            --shenmi-start: #6C5CE7;
-            --shenmi-end: #A363D9;
-            --zashboard-start: #00B894;
-            --zashboard-end: #00CEC9;
-            --substore-start: #0A96DE;
-            --substore-end: #309FEA;
-            --theme-toggle-bg: #e4e6eb;
+            --shadow-hover: rgba(0, 0, 0, 0.2);
+            --shenmi-start: #667eea;
+            --shenmi-end: #764ba2;
+            --zashboard-start: #11998e;
+            --zashboard-end: #38ef7d;
+            --substore-start: #4facfe;
+            --substore-end: #00f2fe;
+            --theme-toggle-bg: rgba(255, 255, 255, 0.2);
+            --particle-color: rgba(255, 255, 255, 0.1);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
                 /* 暗色模式默认变量 */
-                --bg-color: #1a1a1a;
-                --card-bg: rgba(40, 40, 40, 0.95);
-                --text-color: #e4e6eb;
+                --bg-primary: #2c3e50;
+                --bg-secondary: #34495e;
+                --card-bg: rgba(255, 255, 255, 0.1);
+                --card-border: rgba(255, 255, 255, 0.15);
+                --text-color: #ecf0f1;
+                --text-secondary: rgba(236, 240, 241, 0.7);
                 --shadow-color: rgba(0, 0, 0, 0.3);
-                --shenmi-start: #7F53AC;
-                --shenmi-end: #647DEE;
-                --zashboard-start: #2E8B57;
-                --zashboard-end: #20B2AA;
-                --substore-start: #1A94BC;
-                --substore-end: #22A2C3;
-                --theme-toggle-bg: #333;
+                --shadow-hover: rgba(0, 0, 0, 0.4);
+                --shenmi-start: #8e44ad;
+                --shenmi-end: #3498db;
+                --zashboard-start: #16a085;
+                --zashboard-end: #27ae60;
+                --substore-start: #3498db;
+                --substore-end: #9b59b6;
+                --theme-toggle-bg: rgba(255, 255, 255, 0.1);
+                --particle-color: rgba(255, 255, 255, 0.05);
             }
         }
 
         /* 手动暗色模式覆盖 */
         .dark-mode {
-            --bg-color: #121212;
-            --card-bg: rgba(30, 30, 30, 0.95);
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.12);
             --text-color: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
             --shadow-color: rgba(0, 0, 0, 0.5);
-            --shenmi-start: #9D50BB;
-            --shenmi-end: #6E48AA;
-            --zashboard-start: #3CB371;
-            --zashboard-end: #2E8B57;
-            --theme-toggle-bg: #424242;
+            --shadow-hover: rgba(0, 0, 0, 0.6);
+            --shenmi-start: #667eea;
+            --shenmi-end: #764ba2;
+            --zashboard-start: #11998e;
+            --zashboard-end: #38ef7d;
+            --substore-start: #4facfe;
+            --substore-end: #00f2fe;
+            --theme-toggle-bg: rgba(255, 255, 255, 0.1);
+            --particle-color: rgba(255, 255, 255, 0.03);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
@@ -57,100 +81,249 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: var(--bg-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
             color: var(--text-color);
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 背景粒子效果 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--particle-color);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
         }
 
         .panel-container {
             text-align: center;
-            padding: 2.5rem;
+            padding: 3rem 2.5rem;
             background: var(--card-bg);
-            border-radius: 15px;
-            box-shadow: 0 8px 30px var(--shadow-color);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            box-shadow: 
+                0 20px 40px var(--shadow-color),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 10;
+            max-width: 400px;
+            width: 90%;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .panel-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 30px 60px var(--shadow-hover),
+                0 0 0 1px rgba(255, 255, 255, 0.2) inset;
         }
 
         h2 {
-            margin-bottom: 1.5rem;
-            font-size: 1.8em;
+            margin-bottom: 2rem;
+            font-size: 2.2em;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--text-color), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
         }
 
         .btn-group {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.2rem;
         }
 
         .panel-btn {
-            padding: 15px 30px;
+            padding: 18px 32px;
             border: none;
-            border-radius: 8px;
+            border-radius: 16px;
             cursor: pointer;
             font-size: 1.1em;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            font-family: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             color: white;
-            box-shadow: 0 4px 6px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .panel-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .panel-btn:hover::before {
+            left: 100%;
         }
 
         #shenmi-panel {
-            background: linear-gradient(45deg, var(--shenmi-start), var(--shenmi-end));
+            background: linear-gradient(135deg, var(--shenmi-start), var(--shenmi-end));
         }
 
         #zashboard-panel {
-            background: linear-gradient(45deg, var(--zashboard-start), var(--zashboard-end));
+            background: linear-gradient(135deg, var(--zashboard-start), var(--zashboard-end));
         }
 
         #substore-panel {
-            background: linear-gradient(45deg, var(--substore-start), var(--substore-end));
+            background: linear-gradient(135deg, var(--substore-start), var(--substore-end));
         }
 
         .panel-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px var(--shadow-color);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
         }
 
         .panel-btn:active {
-            transform: translateY(0);
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        .panel-btn .icon {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .panel-btn:hover .icon {
+            transform: scale(1.2) rotate(5deg);
         }
 
         .theme-toggle {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
+            top: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: var(--theme-toggle-bg);
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            z-index: 100;
         }
 
         .theme-toggle:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(180deg);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .theme-toggle svg {
             width: 24px;
             height: 24px;
             fill: var(--text-color);
+            transition: all 0.3s ease;
         }
 
         .overlay {
             position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 1000;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .panel-container {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+
+            h2 {
+                font-size: 1.8em;
+                margin-bottom: 1.5rem;
+            }
+
+            .panel-btn {
+                padding: 16px 24px;
+                font-size: 1em;
+            }
+
+            .theme-toggle {
+                top: 16px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* 加载动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        body {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        /* 按钮点击波纹效果 */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="particles"></div>
+    
     <button class="theme-toggle" onclick="toggleTheme()">
         <svg viewBox="0 0 24 24">
             <path d="M12 18c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6zm0-2v-8c2.2 0 4 1.8 4 4s-1.8 4-4 4z"/>
@@ -164,19 +337,19 @@
                 class="panel-btn" 
                 id="shenmi-panel"
                 onclick="jumpTo('http://127.0.0.1:23333', event)">
-                🔮 神秘面板
+                <span class="icon">🔮</span> 神秘面板
             </button>
             <button 
                 class="panel-btn" 
                 id="zashboard-panel"
                 onclick="jumpTo('http://127.0.0.1:9909/ui', event)">
-                ✨ zashboard
+                <span class="icon">✨</span> zashboard
             </button>
             <button 
                 class="panel-btn" 
                 id="substore-panel"
                 onclick="jumpTo('http://127.0.0.1:3001?api=http://127.0.0.1:3001/2cXaAxRGfddmGz2yx1wA', event)">
-                📦 SubStore
+                <span class="icon">📦</span> SubStore
             </button>
         </div>
     </div>
@@ -184,10 +357,58 @@
     <script>
         let isAnimating = false;
 
+        // 创建背景粒子
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 4 + 1;
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                const delay = Math.random() * 6;
+                
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.animationDelay = delay + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // 按钮波纹效果
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            
+            ripple.className = 'ripple';
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            button.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
         function jumpTo(url, event) {
             if (isAnimating) return;
             isAnimating = true;
             event.preventDefault();
+            
+            // 添加波纹效果
+            createRipple(event);
             
             const button = event.currentTarget;
             const rect = button.getBoundingClientRect();
@@ -198,7 +419,7 @@
             overlay.className = 'overlay';
             overlay.style.background = getComputedStyle(button).background;
             overlay.style.clipPath = `circle(0 at ${centerX}px ${centerY}px)`;
-            overlay.style.transition = 'clip-path 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            overlay.style.transition = 'clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
 
             document.body.appendChild(overlay);
 
@@ -223,7 +444,20 @@
             }
         }
 
+        // 添加按钮点击事件监听器
+        document.querySelectorAll('.panel-btn').forEach(btn => {
+            btn.addEventListener('mousedown', createRipple);
+        });
+
+        // 初始化
         initTheme();
+        createParticles();
+
+        // 窗口大小改变时重新创建粒子
+        window.addEventListener('resize', () => {
+            document.querySelector('.particles').innerHTML = '';
+            createParticles();
+        });
     </script>
 </body>
 </html>
